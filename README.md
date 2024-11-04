@@ -12,9 +12,9 @@
 |---|---|---|---|---|---|
 |일정 등록|POST|/api/schedules|요청 body|등록 정보|200:OK|
 |전체 일정 조회|GET|/api/schedules|없음|전체 응답 정보|200:OK, 400: Bad Request, 404:NOT FOUND|
-|선택 일정 조회|GET|/api/schedules/{scheduleId}|없음|단건 응답 정보|200:OK, 404:NOT FOUND|
-|일정 수정|PUT|/api/schedules/{scheduleId}|요청 body|수정 정보|200:OK, 400: Bad Request, 404:NOT FOUND|
-|일정 삭제|DELETE|/api/schedules/{scheduleId}|없음|-|200:OK, 404:NOT FOUND|
+|선택 일정 조회|GET|/api/schedules/{id}|없음|단건 응답 정보|200:OK, 404:NOT FOUND|
+|일정 수정|PUT|/api/schedules/{id}|요청 body|수정 정보|200:OK, 400: Bad Request, 404:NOT FOUND|
+|일정 삭제|DELETE|/api/schedules/{id}|없음|-|200:OK, 404:NOT FOUND|
 
 ### 일정 등록
 #### 요청
@@ -166,7 +166,7 @@
 - Method : PUT
 - URL : /api/schedules/{id}
 - Request : 요청 body
-- 추가 설명 : {scheduleId} 는 URL에서 PathVariable 값을 갖는다. URL 에서 PathVariable 로 넘겨주기 때문에 클라이언트 JSON 값으로 넘겨줄 필요가 없다.
+- 추가 설명 : {id} 는 URL에서 PathVariable 값을 갖는다. URL 에서 PathVariable 로 넘겨주기 때문에 클라이언트 JSON 값으로 넘겨줄 필요가 없다.
 - 요청 JSON 값에 대한 설명
 
 |이름|타입|최대글자수|설명|필수|
@@ -224,14 +224,7 @@
 
 #### 응답
 - Response : 응답 body
-    - 반환값 없음, 상태 코드 : 200:OK
-
-```html
-예시)
-{
-    "scheduleId" : 1
-}
-```
+- 반환값 없음
 - 상태 코드 : 200: OK, 404: NOT FOUND
 
 
@@ -243,6 +236,7 @@
 ## SQL 작성하기
 - 필수 기능 가이드 개발에 필요한 테이블을 생성하는 query를 작성
     - `Create`
+
 ```html
 CREATE TABLE Schedules
 (
@@ -255,15 +249,13 @@ CREATE TABLE Schedules
     modifyScheduleDate LocalDatetime NOT NULL
 );
 ```
-|created_schedule_date|LocalDateTime|YYYY-MM-DD HH:MM:SS|만든 시간|O|
-|modify_schedule_date|LocalDateTime|YYYY-MM-DD HH:MM:SS|수정한 시간|O|
 
 - 일정 생성을 하는 query를 작성
     - `Insert`
 ```html
 - Schedules 테이블
-    INSERT INTO Schedules (title, contents, password, created_schedule_date, modify_schedule_date)
-    VALUES ('Schedule1', 'contents', 'abc123', '2024-10-10T10:00:00', '2024-10-12T10:00:00');
+    INSERT INTO Schedules (id, title, contents, password, created_schedule_date, modify_schedule_date)
+    VALUES (1, 'Schedule1', 'contents', 'abc123', '2024-10-10T10:00:00', '2024-10-12T10:00:00');
 ```
 - 전체 일정을 조회하는 query를 작성
     - `Select`
@@ -271,7 +263,7 @@ CREATE TABLE Schedules
 - Schedules 테이블
     SELECT *
     FROM User
-    WHERE username='HYUNSU' AND (modify_schedule_date BETWEEN '2024-10-31 09:00:00' AND NOW())
+    WHERE username='hyunsu' AND (modify_schedule_date BETWEEN '2024-10-31 09:00:00' AND NOW())
     ORDER BY modify_schedule_date DESC;
 ```
 
@@ -280,7 +272,7 @@ CREATE TABLE Schedules
 ```html
     SELECT *
     FROM Schedules
-    WHERE schedule_id = 1;
+    WHERE id = 1;
 ```
 
 - 선택한 일정을 수정하는 query를 작성
@@ -289,7 +281,7 @@ CREATE TABLE Schedules
 - Schedules 테이블
     UPDATE Schedules
     SET title = 'Modify title', contents = 'Modify contents', modify_schedule_date = NOW()
-    WHERE schedule_id = 1;
+    WHERE id = 1;
 ```
 
 - 선택한 일정을 삭제하는 query를 작성
@@ -297,5 +289,5 @@ CREATE TABLE Schedules
 ```html
 - Schedules 테이블
     DELETE FROM Schedules
-    WHERE schedule_id = 1;
+    WHERE id = 1;
 ```
