@@ -43,7 +43,7 @@
     "password" : "abc123"
 }
 ```
-- 추가 설명 : created_schedule_date, modify_schedule_date 값은 DB단 SQL 에서 NOW() 를 이용해 자동으로 생성된다.
+- 추가 설명 : created_schedule_date, modify_schedule_date 값은 Controller 에서 LocalDateTime.now() 를 이용해 자동으로 생성된다.
 
 
 #### 응답
@@ -51,14 +51,27 @@
 
 |이름|타입|최대글자수|설명|필수|
 |---|---|---|---|---|
-|scheduleId|int|-|일정 번호|O|
+|id|int|-|일정 번호|O|
+|username|String|varchar(20)|사용자 이름|O|
+|title|String|varchar(255)|일정 제목|O|
+|contents|String|varchar(255)|일정 내용|O|
+|password|String|varchar(255)|비밀번호|O|
+|created_schedule_date|LocalDateTime|YYYY-MM-DD HH:MM:SS|만든 날짜와 시간|O|
+|modify_schedule_date|LocalDateTime|YYYY-MM-DD HH:MM:SS|수정 날짜와 시간|O|
+
 
 - response : 응답 body(JSON)
     - 응답 body(JSON) 에 대한 JSON 키-벨류 값
 ```html
 예시)
 {
-    "scheduleId" : 1
+    "id" : 1,
+    "username" : "hyunsu",
+    "title" : "안녕하세요",
+    "contents" : "저는 배가 부릅니다.",
+    "password" : "abc123",
+    "created_schedule_date" : "2024-11-04T17:14:40.5220871",
+    "modify_schedule_date" : "2024-11-04T17:14:40.5250873"
 }
 ```
 - 상태 코드 : 200: OK
@@ -81,19 +94,31 @@
 
 |이름|타입|최대글자수|설명|필수|
 |---|---|---|---|---|
-|scheduleId|int|-|일정 번호|O|
+|id|int|-|일정 번호|O|
 |username|String|varchar(20)|사용자 이름|O|
 |title|String|varchar(255)|일정 이름|O|
 |contents|String|varchar(255)|할 일, 일정 내용|O|
-|createdScheduleDate|Datetime|Datetime|만들어진 시간|O|
-|modifyScheduleDate|Datetime|Datetime|수정된 시간|O|
+|createdScheduleDate|LocalDateTime|YYYY-MM-DD HH:MM:SS|만들어진 시간|O|
+|modifyScheduleDate|LocalDateTime|YYYY-MM-DD HH:MM:SS|수정된 시간|O|
 
 ```html
 예시)
 [
-    {"scheduleId": 1, "username": "HYUNSU", "title": "제목1", "contents": "내용1", "createdScheduleDate": "2024-10-31 09:00:00", "modifyScheduleDate": "2024-11-01 09:00:00},
-    {"scheduleId": 2, "username": "jihyun", "title": "제목2", "contents": "내용2", "createdScheduleDate": "2024-10-31 09:00:00", "modifyScheduleDate": "2024-11-01 09:00:00},
-    {"scheduleId": 3, "username": "sang", "title": "제목3", "contents": "내용3", "createdSchedule_date": "2024-10-31 09:00:00", "modifySchedule_date": "2024-11-01 09:00:00}
+    {    "id": 1,
+         "username": "HYUNSU",
+         "title": "제목1",
+         "contents": "내용1",
+         "createdScheduleDate":
+         "2024-10-31 09:00:00",
+         "modifyScheduleDate": "2024-11-01 09:00:00
+    },
+    {    "id": 2,
+         "username": "jihyun",
+         "title": "제목2",
+         "contents": "내용2",
+         "createdScheduleDate" : "2024-10-31 09:00:00",
+         "modifyScheduleDate":"2024-11-01 09:00:00
+    },
 ]
 ```
 - 상태 코드 : 200:OK, 400: Bad Request, 404:NOT FOUND
@@ -103,11 +128,10 @@
 #### 요청
 - 기능 : 선택 일정 조회
 - Method : GET
-- URL : /api/schedules/{scheduleId}
+- URL : /api/schedules/{id}
 - Request : 없음 
 - Response : 단건 응답 정보
 - 상태 코드 : 200: OK, 404: NOT FOUND
-- 추가 설명 : {scheduleId} 는 URL에서 PathVariable 값을 갖는다. URL 에서 PathVariable 로 넘겨주기 때문에 클라이언트 JSON 값으로 넘겨줄 필요가 없다.
 
 #### 응답
 - response : 응답 body(JSON)
@@ -116,17 +140,17 @@
 
 |이름|타입|최대글자수|설명|필수|
 |---|---|---|---|---|
-|scheduleId|int|-|일정 번호|O|
+|id|int|-|일정 번호|O|
 |username|String|varchar(20)|사용자 이름|O|
 |title|String|varchar(255)|일정 제목|O|
 |contents|String|varchar(255)|일정 내용|O|
-|created_schedule_date|Datetime|Datetime|만든 시간|O|
-|modify_schedule_date|Datetime|Datetime|수정한 시간|O|
+|created_schedule_date|LocalDateTime|YYYY-MM-DD HH:MM:SS|만든 시간|O|
+|modify_schedule_date|LocalDateTime|YYYY-MM-DD HH:MM:SS|수정한 시간|O|
 
 ```html
 예시)
 {
-    "scheduleId": 1,
+    "id": 1,
     "username": "HYUNSU",
     "title": "제목1",
     "contents": "내용1",
@@ -140,19 +164,21 @@
 #### 요청
 - 기능 : 일정 수정
 - Method : PUT
-- URL : /api/schedules/{scheduleId}
+- URL : /api/schedules/{id}
 - Request : 요청 body
 - 추가 설명 : {scheduleId} 는 URL에서 PathVariable 값을 갖는다. URL 에서 PathVariable 로 넘겨주기 때문에 클라이언트 JSON 값으로 넘겨줄 필요가 없다.
 - 요청 JSON 값에 대한 설명
 
 |이름|타입|최대글자수|설명|필수|
 |---|---|---|---|---|
+|id|int|-|일정 ID|O|
 |title|String|varchar(255)|일정 이름|O|
 |contents|String|varchar(255)|일정 내용|O|
 |password|String|varchar(255)|비밀번호|O|
 ```html
 예시)
 {
+    "id" : 1,
     "title" : "두 번째 일정",
     "contents" : "스파르타코딩클럽 Spring 강의 듣기",
     "password" : "abc123"
@@ -167,15 +193,17 @@
 
 |이름|타입|최대글자수|설명|필수|
 |---|---|---|---|---|
-|scheduleId|int|-|일정 번호|O|
+|id|int|-|일정 ID|O|
 |title|String|varchar(255)|일정 이름|O|
 |contents|String|varchar(255)|일정 내용|O|
 |password|String|varchar(255)|비밀번호|O|
+|created_schedule_date|LocalDateTime|YYYY-MM-DD HH:MM:SS|만든 시간|O|
+|modify_schedule_date|LocalDateTime|YYYY-MM-DD HH:MM:SS|수정한 시간|O|
 
 ```html
 예시)
 {
-    "scheduleId" : 1,
+    "id" : 1,
     "title" : "두 번째 일정",
     "contents" : "스파르타코딩클럽 Spring 강의 듣기",
     "password" : "abc123"
@@ -188,21 +216,15 @@
 #### 요청
 - 기능 : 일정 삭제
 - Method : DELETE
-- URL : /api/schedules/{scheduleId}
+- URL : /api/schedules/{id}
 - Request : 없음
 - Response : 수정 정보
 - 상태 코드 : 200: OK, 404: NOT FOUND
-- 추가 설명 : {scheduleId} 는 URL에서 PathVariable 값을 갖는다. URL 에서 PathVariable 로 넘겨주기 때문에 클라이언트 JSON 값으로 넘겨줄 필요가 없다.
+- 추가 설명 : {id} 는 URL에서 PathVariable 값을 갖는다. URL 에서 PathVariable 로 넘겨주기 때문에 클라이언트 JSON 값으로 넘겨줄 필요가 없다.
 
 #### 응답
-- Response : 응답 body(JSON)
-    - 응답 body(JSON) 에 대한 JSON 키-벨류 값
-
-- 응답 JSON 값에 대한 설명
-
-|이름|타입|최대글자수|설명|필수|
-|---|---|---|---|---|
-|scheduleId|int|-|일정 번호|O|
+- Response : 응답 body
+    - 반환값 없음, 상태 코드 : 200:OK
 
 ```html
 예시)
@@ -224,22 +246,24 @@
 ```html
 CREATE TABLE Schedules
 (
-    scheduleId int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
     username varchar(20) NOT NULL,
     title varchar(255) NOT NULL,
     contents varchar(255) NOT NULL,
     password varchar(255) NOT NULL,
-    createdScheduleDate Datetime NOT NULL,
-    modifyScheduleDate Datetime NOT NULL
+    createdScheduleDate LocalDatetime NOT NULL,
+    modifyScheduleDate LocalDatetime NOT NULL
 );
 ```
+|created_schedule_date|LocalDateTime|YYYY-MM-DD HH:MM:SS|만든 시간|O|
+|modify_schedule_date|LocalDateTime|YYYY-MM-DD HH:MM:SS|수정한 시간|O|
 
 - 일정 생성을 하는 query를 작성
     - `Insert`
 ```html
 - Schedules 테이블
     INSERT INTO Schedules (title, contents, password, created_schedule_date, modify_schedule_date)
-    VALUES ('Schedule1', 'contents', 'abc123', NOW(), NOW());
+    VALUES ('Schedule1', 'contents', 'abc123', '2024-10-10T10:00:00', '2024-10-12T10:00:00');
 ```
 - 전체 일정을 조회하는 query를 작성
     - `Select`
