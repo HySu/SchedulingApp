@@ -206,7 +206,9 @@
     "id" : 1,
     "title" : "두 번째 일정",
     "contents" : "스파르타코딩클럽 Spring 강의 듣기",
-    "password" : "abc123"
+    "password" : "abc123",
+    "created_schedule_date" : "2024-11-04T17:14:40.5220871",
+    "modify_schedule_date" : "2024-11-04T17:14:40.5250873"
 }
 ```
 - 상태 코드 : 200:OK, 400: Bad Request, 404:NOT FOUND
