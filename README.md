@@ -51,14 +51,27 @@
 
 |이름|타입|최대글자수|설명|필수|
 |---|---|---|---|---|
-|scheduleId|int|-|일정 번호|O|
+|id|int|-|일정 번호|O|
+|username|String|varchar(20)|사용자 이름|O|
+|title|String|varchar(255)|일정 제목|O|
+|contents|String|varchar(255)|일정 내용|O|
+|password|String|varchar(255)|비밀번호|O|
+|created_schedule_date|LocalDateTime|YYYY-MM-DD HH:MM:SS|만든 날짜와 시간|O|
+|modify_schedule_date|LocalDateTime|YYYY-MM-DD HH:MM:SS|수정 날짜와 시간|O|
+
 
 - response : 응답 body(JSON)
     - 응답 body(JSON) 에 대한 JSON 키-벨류 값
 ```html
 예시)
 {
-    "scheduleId" : 1
+    "id" : 1,
+    "username" : "hyunsu",
+    "title" : "안녕하세요",
+    "contents" : "저는 배가 부릅니다.",
+    "password" : "abc123",
+    "created_schedule_date" : "2024-11-04T17:14:40.5220871",
+    "modify_schedule_date" : "2024-11-04T17:14:40.5250873"
 }
 ```
 - 상태 코드 : 200: OK
