@@ -43,7 +43,7 @@
     "password" : "abc123"
 }
 ```
-- 추가 설명 : created_schedule_date, modify_schedule_date 값은 DB단 SQL 에서 NOW() 를 이용해 자동으로 생성된다.
+- 추가 설명 : created_schedule_date, modify_schedule_date 값은 Controller 에서 LocalDateTime.now() 를 이용해 자동으로 생성된다.
 
 
 #### 응답
@@ -107,7 +107,7 @@
 - Request : 없음 
 - Response : 단건 응답 정보
 - 상태 코드 : 200: OK, 404: NOT FOUND
-- 추가 설명 : {scheduleId} 는 URL에서 PathVariable 값을 갖는다. URL 에서 PathVariable 로 넘겨주기 때문에 클라이언트 JSON 값으로 넘겨줄 필요가 없다.
+- 추가 설명 : created_schedule_date, modify_schedule_date 값은 Controller 에서 LocalDateTime.now() 를 이용해 자동으로 생성된다.
 
 #### 응답
 - response : 응답 body(JSON)
