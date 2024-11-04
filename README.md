@@ -29,8 +29,8 @@
 |title|String|varchar(255)|일정 이름|O|
 |contents|String|varchar(255)|일정 내용|O|
 |password|String|varchar(255)|비밀번호|O|
-|created_schedule_date|Datetime|-|만들어진 시간|X|
-|modify_schedule_date|Datetime|-|수정된 시간|X|
+|created_schedule_date|LocalDateTime|-|만들어진 시간|X|
+|modify_schedule_date|LocalDateTime|-|수정된 시간|X|
 
 - Request : 요청 body
     - 요청 body(JSON) 에 대한 JSON 코드
