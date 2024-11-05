@@ -231,7 +231,8 @@
 
 
 ## ERD
-![제목 없음](https://github.com/user-attachments/assets/257c9b09-daaa-4ddc-8a70-b240fa003a96)
+![제목 없음](https://github.com/user-attachments/assets/23f403bc-2a90-4194-971e-85d1c6e57bf6)
+
 
 
 
