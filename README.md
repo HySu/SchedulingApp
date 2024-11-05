@@ -51,7 +51,7 @@
 
 |이름|타입|최대글자수|설명|필수|
 |---|---|---|---|---|
-|id|int|-|일정 번호|O|
+|id|Bigint|-|일정 번호|O|
 |username|String|varchar(20)|사용자 이름|O|
 |title|String|varchar(255)|일정 제목|O|
 |contents|String|varchar(255)|일정 내용|O|
@@ -94,7 +94,7 @@
 
 |이름|타입|최대글자수|설명|필수|
 |---|---|---|---|---|
-|id|int|-|일정 번호|O|
+|id|Bigint|-|일정 번호|O|
 |username|String|varchar(20)|사용자 이름|O|
 |title|String|varchar(255)|일정 이름|O|
 |contents|String|varchar(255)|할 일, 일정 내용|O|
@@ -140,7 +140,7 @@
 
 |이름|타입|최대글자수|설명|필수|
 |---|---|---|---|---|
-|id|int|-|일정 번호|O|
+|id|Bigint|-|일정 번호|O|
 |username|String|varchar(20)|사용자 이름|O|
 |title|String|varchar(255)|일정 제목|O|
 |contents|String|varchar(255)|일정 내용|O|
@@ -171,7 +171,7 @@
 
 |이름|타입|최대글자수|설명|필수|
 |---|---|---|---|---|
-|id|int|-|일정 ID|O|
+|id|Bigint|-|일정 ID|O|
 |title|String|varchar(255)|일정 이름|O|
 |contents|String|varchar(255)|일정 내용|O|
 |password|String|varchar(255)|비밀번호|O|
@@ -193,7 +193,7 @@
 
 |이름|타입|최대글자수|설명|필수|
 |---|---|---|---|---|
-|id|int|-|일정 ID|O|
+|id|Bigint|-|일정 ID|O|
 |title|String|varchar(255)|일정 이름|O|
 |contents|String|varchar(255)|일정 내용|O|
 |password|String|varchar(255)|비밀번호|O|
@@ -231,7 +231,8 @@
 
 
 ## ERD
-![제목 없음](https://github.com/user-attachments/assets/1c22d592-f169-4958-bd3c-70a7f7d819cd)
+![제목 없음](https://github.com/user-attachments/assets/841547b1-020d-4113-8454-158dcc75a53d)
+
 
 
 
@@ -244,13 +245,13 @@
 ```html
 CREATE TABLE Schedules
 (
-    id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    username varchar(20) NOT NULL,
-    title varchar(255) NOT NULL,
-    contents varchar(255) NOT NULL,
-    password varchar(255) NOT NULL,
-    createdScheduleDate LocalDatetime NOT NULL,
-    modifyScheduleDate LocalDatetime NOT NULL
+    id BIGINT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    username VARCHAR(20) NOT NULL,
+    title VARCHAR(255) NOT NULL,
+    contents VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    createdScheduleDate DATETIME NOT NULL,
+    modifyScheduleDate DATETIME NOT NULL
 );
 ```
 
@@ -258,8 +259,8 @@ CREATE TABLE Schedules
     - `Insert`
 ```html
 - Schedules 테이블
-    INSERT INTO Schedules (id, title, contents, password, created_schedule_date, modify_schedule_date)
-    VALUES (1, 'Schedule1', 'contents', 'abc123', '2024-10-10 10:00:00', '2024-10-12 10:00:00');
+    INSERT INTO Schedules (title, contents, password, created_schedule_date, modify_schedule_date)
+    VALUES ('Schedule1', 'contents', 'abc123', '2024-10-10 10:00:00', '2024-10-12 10:00:00');
 ```
 - 전체 일정을 조회하는 query를 작성
     - `Select`
