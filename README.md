@@ -70,8 +70,8 @@
     "title" : "안녕하세요",
     "contents" : "저는 배가 부릅니다.",
     "password" : "abc123",
-    "created_schedule_date" : "2024-11-04T17:14:40.5220871",
-    "modify_schedule_date" : "2024-11-04T17:14:40.5250873"
+    "created_schedule_date" : "2024-11-04 17:14:40",
+    "modify_schedule_date" : "2024-11-04 17:14:40"
 }
 ```
 - 상태 코드 : 200: OK
@@ -207,8 +207,8 @@
     "title" : "두 번째 일정",
     "contents" : "스파르타코딩클럽 Spring 강의 듣기",
     "password" : "abc123",
-    "created_schedule_date" : "2024-11-04T17:14:40.5220871",
-    "modify_schedule_date" : "2024-11-04T17:14:40.5250873"
+    "created_schedule_date" : "2024-11-04 17:14:40",
+    "modify_schedule_date" : "2024-11-04 17:14:40"
 }
 ```
 - 상태 코드 : 200:OK, 400: Bad Request, 404:NOT FOUND
@@ -259,7 +259,7 @@ CREATE TABLE Schedules
 ```html
 - Schedules 테이블
     INSERT INTO Schedules (id, title, contents, password, created_schedule_date, modify_schedule_date)
-    VALUES (1, 'Schedule1', 'contents', 'abc123', '2024-10-10T10:00:00', '2024-10-12T10:00:00');
+    VALUES (1, 'Schedule1', 'contents', 'abc123', '2024-10-10 10:00:00', '2024-10-12 10:00:00');
 ```
 - 전체 일정을 조회하는 query를 작성
     - `Select`
