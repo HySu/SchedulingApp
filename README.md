@@ -29,8 +29,8 @@
 |title|String|varchar(255)|일정 이름|O|
 |contents|String|varchar(255)|일정 내용|O|
 |password|String|varchar(255)|비밀번호|O|
-|created_schedule_date|LocalDateTime|-|만들어진 시간|X|
-|modify_schedule_date|LocalDateTime|-|수정된 시간|X|
+|createdScheduleDate|Date|-|만들어진 시간|O|
+|modifyScheduleDate|Date|-|수정된 시간|O|
 
 - Request : 요청 body
     - 요청 body(JSON) 에 대한 JSON 코드
@@ -40,10 +40,11 @@
     "username" : "HYUNSU",
     "title" : "첫 번째 일정 등록",
     "contents" : 스파르타코딩클럽 1주차 강의 듣기,
-    "password" : "abc123"
+    "password" : "abc123",
+    "createdScheduleDate" : "2020-11-05 09:00:00",
+    "modifyScheduleDate" : "2020-11-05 09:00:00"
 }
 ```
-- 추가 설명 : created_schedule_date, modify_schedule_date 값은 Controller 에서 LocalDateTime.now() 를 이용해 자동으로 생성된다.
 
 
 #### 응답
@@ -56,8 +57,8 @@
 |title|String|varchar(255)|일정 제목|O|
 |contents|String|varchar(255)|일정 내용|O|
 |password|String|varchar(255)|비밀번호|O|
-|created_schedule_date|LocalDateTime|YYYY-MM-DD HH:MM:SS|만든 날짜와 시간|O|
-|modify_schedule_date|LocalDateTime|YYYY-MM-DD HH:MM:SS|수정 날짜와 시간|O|
+|created_schedule_date|Date|YYYY-MM-DD HH:MM:SS|만든 날짜와 시간|O|
+|modify_schedule_date|Date|YYYY-MM-DD HH:MM:SS|수정 날짜와 시간|O|
 
 
 - response : 응답 body(JSON)
@@ -98,8 +99,8 @@
 |username|String|varchar(20)|사용자 이름|O|
 |title|String|varchar(255)|일정 이름|O|
 |contents|String|varchar(255)|할 일, 일정 내용|O|
-|createdScheduleDate|LocalDateTime|YYYY-MM-DD HH:MM:SS|만들어진 시간|O|
-|modifyScheduleDate|LocalDateTime|YYYY-MM-DD HH:MM:SS|수정된 시간|O|
+|createdScheduleDate|Date|YYYY-MM-DD HH:MM:SS|만들어진 시간|O|
+|modifyScheduleDate|Date|YYYY-MM-DD HH:MM:SS|수정된 시간|O|
 
 ```html
 예시)
@@ -108,8 +109,7 @@
          "username": "HYUNSU",
          "title": "제목1",
          "contents": "내용1",
-         "createdScheduleDate":
-         "2024-10-31 09:00:00",
+         "createdScheduleDate": "2024-10-31 09:00:00",
          "modifyScheduleDate": "2024-11-01 09:00:00
     },
     {    "id": 2,
@@ -117,7 +117,7 @@
          "title": "제목2",
          "contents": "내용2",
          "createdScheduleDate" : "2024-10-31 09:00:00",
-         "modifyScheduleDate":"2024-11-01 09:00:00
+         "modifyScheduleDate":"2024-11-01 09:00:00"
     },
 ]
 ```
@@ -144,8 +144,8 @@
 |username|String|varchar(20)|사용자 이름|O|
 |title|String|varchar(255)|일정 제목|O|
 |contents|String|varchar(255)|일정 내용|O|
-|created_schedule_date|LocalDateTime|YYYY-MM-DD HH:MM:SS|만든 시간|O|
-|modify_schedule_date|LocalDateTime|YYYY-MM-DD HH:MM:SS|수정한 시간|O|
+|created_schedule_date|Date|YYYY-MM-DD HH:MM:SS|만든 시간|O|
+|modify_schedule_date|Date|YYYY-MM-DD HH:MM:SS|수정한 시간|O|
 
 ```html
 예시)
@@ -155,7 +155,7 @@
     "title": "제목1",
     "contents": "내용1",
     "createdScheduleDate": "2024-10-31 09:00:00",
-    "modifyScheduleDate": "2024-11-01 09:00:00}
+    "modifyScheduleDate": "2024-11-01 09:00:00"
 }
 ```
 - 상태 코드 : 200:OK, 404:NOT FOUND
@@ -197,8 +197,8 @@
 |title|String|varchar(255)|일정 이름|O|
 |contents|String|varchar(255)|일정 내용|O|
 |password|String|varchar(255)|비밀번호|O|
-|created_schedule_date|LocalDateTime|YYYY-MM-DD HH:MM:SS|만든 시간|O|
-|modify_schedule_date|LocalDateTime|YYYY-MM-DD HH:MM:SS|수정한 시간|O|
+|created_schedule_date|Date|YYYY-MM-DD HH:MM:SS|만든 시간|O|
+|modify_schedule_date|Date|YYYY-MM-DD HH:MM:SS|수정한 시간|O|
 
 ```html
 예시)
@@ -250,8 +250,8 @@ CREATE TABLE Schedules
     title VARCHAR(255) NOT NULL,
     contents VARCHAR(255) NOT NULL,
     password VARCHAR(255) NOT NULL,
-    createdScheduleDate DATETIME NOT NULL,
-    modifyScheduleDate DATETIME NOT NULL
+    created_schedule_date DATETIME NOT NULL,
+    modify_schedule_date DATETIME NOT NULL
 );
 ```
 
