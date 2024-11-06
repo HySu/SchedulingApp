@@ -13,8 +13,8 @@ public class ScheduleResponseDto {
     private String title;
     private String contents;
     private String password;
-    private LocalDateTime created_schedule_date;
-    private LocalDateTime modify_schedule_date;
+    private LocalDateTime createdScheduleDate;
+    private LocalDateTime modifyScheduleDate;
 
 
     public ScheduleResponseDto(Schedule schedule) {
@@ -23,7 +23,7 @@ public class ScheduleResponseDto {
         this.title = schedule.getTitle();
         this.contents = schedule.getContents();
         this.password = schedule.getPassword();
-        this.created_schedule_date = schedule.getCreated_schedule_date();
-        this.modify_schedule_date = schedule.getModify_schedule_date();
+        this.createdScheduleDate = schedule.getCreatedScheduleDate();
+        this.modifyScheduleDate = schedule.getModifyScheduleDate();
     }
 }
