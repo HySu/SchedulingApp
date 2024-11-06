@@ -29,8 +29,8 @@
 |title|String|varchar(255)|일정 이름|O|
 |contents|String|varchar(255)|일정 내용|O|
 |password|String|varchar(255)|비밀번호|O|
-|createdScheduleDate|Date|-|만들어진 시간|O|
-|modifyScheduleDate|Date|-|수정된 시간|O|
+|createdScheduleDate|LocalDateTime|-|만들어진 시간|O|
+|modifyScheduleDate|LocalDateTime|-|수정된 시간|O|
 
 - Request : 요청 body
     - 요청 body(JSON) 에 대한 JSON 코드
@@ -57,8 +57,8 @@
 |title|String|varchar(255)|일정 제목|O|
 |contents|String|varchar(255)|일정 내용|O|
 |password|String|varchar(255)|비밀번호|O|
-|created_schedule_date|Date|-|만든 날짜와 시간|O|
-|modify_schedule_date|Date|-|수정 날짜와 시간|O|
+|created_schedule_date|LocalDateTime|-|만든 날짜와 시간|O|
+|modify_schedule_date|LocalDateTime|-|수정 날짜와 시간|O|
 
 
 - response : 응답 body(JSON)
@@ -99,8 +99,8 @@
 |username|String|varchar(20)|사용자 이름|O|
 |title|String|varchar(255)|일정 이름|O|
 |contents|String|varchar(255)|할 일, 일정 내용|O|
-|createdScheduleDate|Date|-|만들어진 시간|O|
-|modifyScheduleDate|Date|-|수정된 시간|O|
+|createdScheduleDate|LocalDateTime|-|만들어진 시간|O|
+|modifyScheduleDate|LocalDateTime|-|수정된 시간|O|
 
 ```html
 예시)
@@ -144,8 +144,8 @@
 |username|String|varchar(20)|사용자 이름|O|
 |title|String|varchar(255)|일정 제목|O|
 |contents|String|varchar(255)|일정 내용|O|
-|created_schedule_date|Date|-|만든 시간|O|
-|modify_schedule_date|Date|-|수정한 시간|O|
+|created_schedule_date|LocalDateTime|-|만든 시간|O|
+|modify_schedule_date|LocalDateTime|-|수정한 시간|O|
 
 ```html
 예시)
@@ -197,8 +197,8 @@
 |title|String|varchar(255)|일정 이름|O|
 |contents|String|varchar(255)|일정 내용|O|
 |password|String|varchar(255)|비밀번호|O|
-|created_schedule_date|Date|-|만든 시간|O|
-|modify_schedule_date|Date|-|수정한 시간|O|
+|created_schedule_date|LocalDateTime|-|만든 시간|O|
+|modify_schedule_date|LocalDateTime|-|수정한 시간|O|
 
 ```html
 예시)
@@ -250,8 +250,8 @@ CREATE TABLE Schedules
     title VARCHAR(255) NOT NULL,
     contents VARCHAR(255) NOT NULL,
     password VARCHAR(255) NOT NULL,
-    created_schedule_date DATETIME NOT NULL,
-    modify_schedule_date DATETIME NOT NULL
+    created_schedule_date LocalDateTime,
+    modify_schedule_date LocalDateTime
 );
 ```
 
