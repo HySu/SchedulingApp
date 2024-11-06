@@ -12,9 +12,9 @@
 |---|---|---|---|---|---|
 |일정 등록|POST|/api/schedules|요청 body|등록 정보|200:OK|
 |전체 일정 조회|GET|/api/schedules|없음|전체 응답 정보|200:OK, 400: Bad Request, 404:NOT FOUND|
-|선택 일정 조회|GET|/api/schedules/{scheduleId}|없음|단건 응답 정보|200:OK, 404:NOT FOUND|
-|일정 수정|PUT|/api/schedules/{scheduleId}|요청 body|수정 정보|200:OK, 400: Bad Request, 404:NOT FOUND|
-|일정 삭제|DELETE|/api/schedules/{scheduleId}|없음|-|200:OK, 404:NOT FOUND|
+|선택 일정 조회|GET|/api/schedules/{id}|없음|단건 응답 정보|200:OK, 404:NOT FOUND|
+|일정 수정|PUT|/api/schedules/{id}|요청 body|수정 정보|200:OK, 400: Bad Request, 404:NOT FOUND|
+|일정 삭제|DELETE|/api/schedules/{id}|없음|-|200:OK, 404:NOT FOUND|
 
 ### 일정 등록
 #### 요청
@@ -29,8 +29,8 @@
 |title|String|varchar(255)|일정 이름|O|
 |contents|String|varchar(255)|일정 내용|O|
 |password|String|varchar(255)|비밀번호|O|
-|created_schedule_date|Datetime|-|만들어진 시간|X|
-|modify_schedule_date|Datetime|-|수정된 시간|X|
+|created_schedule_date|LocalDateTime|-|만들어진 시간|X|
+|modify_schedule_date|LocalDateTime|-|수정된 시간|X|
 
 - Request : 요청 body
     - 요청 body(JSON) 에 대한 JSON 코드
@@ -43,7 +43,7 @@
     "password" : "abc123"
 }
 ```
-- 추가 설명 : created_schedule_date, modify_schedule_date 값은 Controller 에서 LocalDateTime.now() 를 이용해 자동으로 생성된다.
+- 추가 설명 : created_schedule_date, modify_schedule_date 값은 Controller 에서 LocalDateTime.now() 를 이용해 자동으로 생성된다.
 
 
 #### 응답
@@ -51,7 +51,7 @@
 
 |이름|타입|최대글자수|설명|필수|
 |---|---|---|---|---|
-|id|int|-|일정 번호|O|
+|id|Bigint|-|일정 번호|O|
 |username|String|varchar(20)|사용자 이름|O|
 |title|String|varchar(255)|일정 제목|O|
 |contents|String|varchar(255)|일정 내용|O|
@@ -70,8 +70,8 @@
     "title" : "안녕하세요",
     "contents" : "저는 배가 부릅니다.",
     "password" : "abc123",
-    "created_schedule_date" : "2024-11-04T17:14:40.5220871",
-    "modify_schedule_date" : "2024-11-04T17:14:40.5250873"
+    "created_schedule_date" : "2024-11-04 17:14:40",
+    "modify_schedule_date" : "2024-11-04 17:14:40"
 }
 ```
 - 상태 코드 : 200: OK
@@ -94,7 +94,7 @@
 
 |이름|타입|최대글자수|설명|필수|
 |---|---|---|---|---|
-|id|int|-|일정 번호|O|
+|id|Bigint|-|일정 번호|O|
 |username|String|varchar(20)|사용자 이름|O|
 |title|String|varchar(255)|일정 이름|O|
 |contents|String|varchar(255)|할 일, 일정 내용|O|
@@ -140,7 +140,7 @@
 
 |이름|타입|최대글자수|설명|필수|
 |---|---|---|---|---|
-|id|int|-|일정 번호|O|
+|id|Bigint|-|일정 번호|O|
 |username|String|varchar(20)|사용자 이름|O|
 |title|String|varchar(255)|일정 제목|O|
 |contents|String|varchar(255)|일정 내용|O|
@@ -166,12 +166,12 @@
 - Method : PUT
 - URL : /api/schedules/{id}
 - Request : 요청 body
-- 추가 설명 : {scheduleId} 는 URL에서 PathVariable 값을 갖는다. URL 에서 PathVariable 로 넘겨주기 때문에 클라이언트 JSON 값으로 넘겨줄 필요가 없다.
+- 추가 설명 : {id} 는 URL에서 PathVariable 값을 갖는다. URL 에서 PathVariable 로 넘겨주기 때문에 클라이언트 JSON 값으로 넘겨줄 필요가 없다.
 - 요청 JSON 값에 대한 설명
 
 |이름|타입|최대글자수|설명|필수|
 |---|---|---|---|---|
-|id|int|-|일정 ID|O|
+|id|Bigint|-|일정 ID|O|
 |title|String|varchar(255)|일정 이름|O|
 |contents|String|varchar(255)|일정 내용|O|
 |password|String|varchar(255)|비밀번호|O|
@@ -193,7 +193,7 @@
 
 |이름|타입|최대글자수|설명|필수|
 |---|---|---|---|---|
-|id|int|-|일정 ID|O|
+|id|Bigint|-|일정 ID|O|
 |title|String|varchar(255)|일정 이름|O|
 |contents|String|varchar(255)|일정 내용|O|
 |password|String|varchar(255)|비밀번호|O|
@@ -206,7 +206,9 @@
     "id" : 1,
     "title" : "두 번째 일정",
     "contents" : "스파르타코딩클럽 Spring 강의 듣기",
-    "password" : "abc123"
+    "password" : "abc123",
+    "created_schedule_date" : "2024-11-04 17:14:40",
+    "modify_schedule_date" : "2024-11-04 17:14:40"
 }
 ```
 - 상태 코드 : 200:OK, 400: Bad Request, 404:NOT FOUND
@@ -224,46 +226,41 @@
 
 #### 응답
 - Response : 응답 body
-    - 반환값 없음, 상태 코드 : 200:OK
-
-```html
-예시)
-{
-    "scheduleId" : 1
-}
-```
+- 반환값 없음
 - 상태 코드 : 200: OK, 404: NOT FOUND
 
 
 ## ERD
-![제목 없음](https://github.com/user-attachments/assets/257c9b09-daaa-4ddc-8a70-b240fa003a96)
+![제목 없음](https://github.com/user-attachments/assets/841547b1-020d-4113-8454-158dcc75a53d)
+
+
+
 
 
 
 ## SQL 작성하기
 - 필수 기능 가이드 개발에 필요한 테이블을 생성하는 query를 작성
     - `Create`
+
 ```html
 CREATE TABLE Schedules
 (
-    id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    username varchar(20) NOT NULL,
-    title varchar(255) NOT NULL,
-    contents varchar(255) NOT NULL,
-    password varchar(255) NOT NULL,
-    createdScheduleDate LocalDatetime NOT NULL,
-    modifyScheduleDate LocalDatetime NOT NULL
+    id BIGINT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    username VARCHAR(20) NOT NULL,
+    title VARCHAR(255) NOT NULL,
+    contents VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    createdScheduleDate DATETIME NOT NULL,
+    modifyScheduleDate DATETIME NOT NULL
 );
 ```
-|created_schedule_date|LocalDateTime|YYYY-MM-DD HH:MM:SS|만든 시간|O|
-|modify_schedule_date|LocalDateTime|YYYY-MM-DD HH:MM:SS|수정한 시간|O|
 
 - 일정 생성을 하는 query를 작성
     - `Insert`
 ```html
 - Schedules 테이블
     INSERT INTO Schedules (title, contents, password, created_schedule_date, modify_schedule_date)
-    VALUES ('Schedule1', 'contents', 'abc123', '2024-10-10T10:00:00', '2024-10-12T10:00:00');
+    VALUES ('Schedule1', 'contents', 'abc123', '2024-10-10 10:00:00', '2024-10-12 10:00:00');
 ```
 - 전체 일정을 조회하는 query를 작성
     - `Select`
@@ -271,7 +268,7 @@ CREATE TABLE Schedules
 - Schedules 테이블
     SELECT *
     FROM User
-    WHERE username='HYUNSU' AND (modify_schedule_date BETWEEN '2024-10-31 09:00:00' AND NOW())
+    WHERE username='hyunsu' AND (modify_schedule_date BETWEEN '2024-10-31 09:00:00' AND NOW())
     ORDER BY modify_schedule_date DESC;
 ```
 
@@ -280,7 +277,7 @@ CREATE TABLE Schedules
 ```html
     SELECT *
     FROM Schedules
-    WHERE schedule_id = 1;
+    WHERE id = 1;
 ```
 
 - 선택한 일정을 수정하는 query를 작성
@@ -289,7 +286,7 @@ CREATE TABLE Schedules
 - Schedules 테이블
     UPDATE Schedules
     SET title = 'Modify title', contents = 'Modify contents', modify_schedule_date = NOW()
-    WHERE schedule_id = 1;
+    WHERE id = 1;
 ```
 
 - 선택한 일정을 삭제하는 query를 작성
@@ -297,5 +294,5 @@ CREATE TABLE Schedules
 ```html
 - Schedules 테이블
     DELETE FROM Schedules
-    WHERE schedule_id = 1;
+    WHERE id = 1;
 ```
