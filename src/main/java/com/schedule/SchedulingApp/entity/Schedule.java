@@ -1,16 +1,12 @@
 package com.schedule.SchedulingApp.entity;
 
-import com.schedule.SchedulingApp.dto.ScheduleRequestDto;
-import lombok.AllArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
-import lombok.Setter;
-import org.springframework.cglib.core.Local;
 
+import java.sql.Date;
 import java.time.LocalDateTime;
 
 @Getter
-@Setter
-@AllArgsConstructor
 public class Schedule{
     private Long id;
     private String username;
@@ -20,9 +16,14 @@ public class Schedule{
     private LocalDateTime createdScheduleDate;
     private LocalDateTime modifyScheduleDate;
 
-    public Schedule(String title, String contents){
+    public Schedule(Long id, String username, String title, String contents, String password, LocalDateTime createdScheduleDate, LocalDateTime modifyScheduleDate) {
+        this.id = id;
+        this.username = username;
         this.title = title;
         this.contents = contents;
+        this.password = password;
+        this.createdScheduleDate = createdScheduleDate;
+        this.modifyScheduleDate = modifyScheduleDate;
     }
 
     public Schedule(String username, String title, String contents, String password, LocalDateTime createdScheduleDate, LocalDateTime modifyScheduleDate) {

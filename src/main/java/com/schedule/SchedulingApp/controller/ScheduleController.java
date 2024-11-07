@@ -21,8 +21,8 @@ public class ScheduleController {
 
     // 일정 등록
     @PostMapping
-    public ResponseEntity<ScheduleResponseDto> createSchedule(@RequestBody ScheduleRequestDto requestDto) {
-        return new ResponseEntity<>(scheduleService.saveSchedule(requestDto), HttpStatus.CREATED);
+    public ResponseEntity<ScheduleResponseDto> createSchedule(@RequestBody ScheduleRequestDto dto) {
+        return new ResponseEntity<>(scheduleService.saveSchedule(dto), HttpStatus.CREATED);
     }
 
     // 전체 일정 조회
@@ -37,16 +37,10 @@ public class ScheduleController {
         return new ResponseEntity<>(scheduleService.findScheduleById(id), HttpStatus.OK);
     }
     
-    // 일정 수정, LocalDateTime.now() 는 modifyScheduleDate 를 수정한다.
+    // 일정 수정
     @PutMapping("/{id}")
-    public ResponseEntity<ScheduleResponseDto> updateSchedule(@PathVariable Long id, @RequestBody ScheduleRequestDto requestDto) {
-        return new ResponseEntity<>(scheduleService.updateSchedule(id, requestDto.getUsername(), requestDto.getTitle(), requestDto.getContents(), requestDto.getPassword(), LocalDateTime.now()), HttpStatus.OK);
-    }
-
-    // 일정 제목 수정, LocalDateTime.now() 는 modifyScheduleDate 를 수정한다.
-    @PatchMapping("/{id}")
-    public ResponseEntity<ScheduleResponseDto> updateTitle(@PathVariable Long id, @RequestBody ScheduleRequestDto requestDto){
-        return new ResponseEntity<>(scheduleService.updateTitle(id, requestDto.getTitle(), requestDto.getContents(), LocalDateTime.now()), HttpStatus.OK);
+    public ResponseEntity<ScheduleResponseDto> updateSchedule(@PathVariable Long id, @RequestBody ScheduleRequestDto dto) {
+        return new ResponseEntity<>(scheduleService.updateSchedule(id, dto.getUsername(), dto.getTitle(), dto.getContents(), dto.getPassword(), dto.getModifyScheduleDate()), HttpStatus.OK);
     }
 
     // 일정 삭제
