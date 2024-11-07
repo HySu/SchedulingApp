@@ -196,7 +196,6 @@
 |id|Bigint|-|일정 ID|O|
 |title|String|varchar(255)|일정 이름|O|
 |contents|String|varchar(255)|일정 내용|O|
-|password|String|varchar(255)|비밀번호|O|
 |created_schedule_date|LocalDateTime|-|만든 시간|O|
 |modify_schedule_date|LocalDateTime|-|수정한 시간|O|
 
@@ -206,7 +205,6 @@
     "id" : 1,
     "title" : "두 번째 일정",
     "contents" : "스파르타코딩클럽 Spring 강의 듣기",
-    "password" : "abc123",
     "created_schedule_date" : "2024-11-04 17:14:40",
     "modify_schedule_date" : "2024-11-04 17:14:40"
 }
