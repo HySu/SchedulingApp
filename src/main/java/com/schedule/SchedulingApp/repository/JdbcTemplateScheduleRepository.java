@@ -50,34 +50,45 @@ public class JdbcTemplateScheduleRepository implements ScheduleRepository {
         // 저장 후 생성된 key값 Number 타입으로 변환하는 메서드
         Number key = jdbcInsert.executeAndReturnKey(new MapSqlParameterSource(parameters));
 
-        return new ScheduleResponseDto(key.longValue(), schedule.getUsername(), schedule.getTitle(), schedule.getContents(), schedule.getPassword(), now, now);
+        return new ScheduleResponseDto(key.longValue(), schedule.getUsername(), schedule.getTitle(), schedule.getContents(), now, now);
     }
 
+    // 일정 전체 조회
     @Override
     public List<ScheduleResponseDto> findAllSchedules() {
         return jdbcTemplate.query("SELECT * FROM schedules", scheduleRowMapper());
     }
 
+    // 일정 단건 조회
     @Override
     public Optional<Schedule> findScheduleById(Long id) {
         List<Schedule> result = jdbcTemplate.query("SELECT * FROM schedules WHERE id = ?", scheduleRowMapperV2(), id);
         return result.stream().findAny();
     }
 
+    // 일정 단건 조회
     @Override
     public Schedule findScheduleByIdOrElse(Long id) {
         List<Schedule> result = jdbcTemplate.query("SELECT * FROM schedules WHERE id = ?", scheduleRowMapperV2(), id);
         return result.stream().findAny().orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Does not exists id = " + id));
     }
 
+    // 일정 수정
     @Override
-    public int updateSchedule(Long id, String username, String title, String contents, String password, LocalDateTime modifyScheduleDate) {
-        return jdbcTemplate.update("UPDATE schedules SET username = ?, title = ?, contents = ?, password = ?, modify_schedule_date = ? WHERE id = ?", username, title, contents, password, modifyScheduleDate, id);
+    public int updateSchedule(Long id, String username, String title, String contents, LocalDateTime modifyScheduleDate) {
+        return jdbcTemplate.update("UPDATE schedules SET username = ?, title = ?, contents = ?, modify_schedule_date = ? WHERE id = ?", username, title, contents, modifyScheduleDate, id);
     }
 
+    // 일정 삭제
     @Override
     public int deleteSchedule(Long id) {
         return jdbcTemplate.update("DELETE FROM schedules where id = ?", id);
+    }
+
+    @Override
+    public String findPasswordById(Long id) {
+        String result = jdbcTemplate.queryForObject("SELECT password FROM schedules WHERE id = ?", String.class, id);
+        return result;
     }
 
     private RowMapper<ScheduleResponseDto> scheduleRowMapper(){
@@ -90,7 +101,6 @@ public class JdbcTemplateScheduleRepository implements ScheduleRepository {
                         rs.getString("username"),
                         rs.getString("title"),
                         rs.getString("contents"),
-                        rs.getString("password"),
                         rs.getTimestamp("created_schedule_date").toLocalDateTime(),
                         rs.getTimestamp("modify_schedule_date").toLocalDateTime()
                 );
@@ -103,13 +113,13 @@ public class JdbcTemplateScheduleRepository implements ScheduleRepository {
             @Override
             public Schedule mapRow(ResultSet rs, int rowNum) throws SQLException {
                 return new Schedule(
-                        rs.getLong("id"),
-                        rs.getString("username"),
-                        rs.getString("title"),
-                        rs.getString("contents"),
-                        rs.getString("password"),
-                        rs.getTimestamp("created_schedule_date").toLocalDateTime(),
-                        rs.getTimestamp("modify_schedule_date").toLocalDateTime()
+                    rs.getLong("id"),
+                    rs.getString("username"),
+                    rs.getString("title"),
+                    rs.getString("contents"),
+                    rs.getString("password"),
+                    rs.getTimestamp("created_schedule_date").toLocalDateTime(),
+                    rs.getTimestamp("modify_schedule_date").toLocalDateTime()
                 );
             }
         };

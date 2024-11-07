@@ -3,7 +3,6 @@ package com.schedule.SchedulingApp.dto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import java.sql.Date;
 import java.time.LocalDateTime;
 
 @Getter

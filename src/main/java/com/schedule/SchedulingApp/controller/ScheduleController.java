@@ -40,7 +40,7 @@ public class ScheduleController {
     // 일정 수정
     @PutMapping("/{id}")
     public ResponseEntity<ScheduleResponseDto> updateSchedule(@PathVariable Long id, @RequestBody ScheduleRequestDto dto) {
-        return new ResponseEntity<>(scheduleService.updateSchedule(id, dto.getUsername(), dto.getTitle(), dto.getContents(), dto.getPassword(), dto.getModifyScheduleDate()), HttpStatus.OK);
+        return new ResponseEntity<>(scheduleService.updateSchedule(id, dto), HttpStatus.OK);
     }
 
     // 일정 삭제

@@ -10,9 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ScheduleServiceImpl implements ScheduleService{
@@ -47,13 +45,26 @@ public class ScheduleServiceImpl implements ScheduleService{
     // 일정 수정
     @Transactional
     @Override
-    public ScheduleResponseDto updateSchedule(Long id, String username, String title, String contents, String password, LocalDateTime modifyScheduleDate) {
+    public ScheduleResponseDto updateSchedule(Long id, ScheduleRequestDto dto){ //String username, String title, String contents, String password, LocalDateTime modifyScheduleDate) {
+        String username = dto.getUsername();
+        String title = dto.getTitle();
+        String contents = dto.getContents();
+        String password = dto.getPassword();
+        LocalDateTime localDateTime = LocalDateTime.now();
+
+        
+        //  비밀번호 일치 여부 확인
+        String currPassword = scheduleRepository.findPasswordById(id);
+        if(!password.equals(currPassword)){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Wrong password");
+        }
+
         // 필수값 검증
         if(username == null || title == null || contents == null || password == null){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The username, title, contents, password, and modifyScheduleDate are required values.");
         }
 
-        int updatedRow = scheduleRepository.updateSchedule(id, username, title, contents, password, LocalDateTime.now());
+        int updatedRow = scheduleRepository.updateSchedule(id, username, title, contents, localDateTime);
 
         //NPE 방지
         if(updatedRow == 0){
