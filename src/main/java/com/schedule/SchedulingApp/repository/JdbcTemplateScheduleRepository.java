@@ -84,7 +84,8 @@ public class JdbcTemplateScheduleRepository implements ScheduleRepository {
     public int deleteSchedule(Long id) {
         return jdbcTemplate.update("DELETE FROM schedules where id = ?", id);
     }
-
+    
+    // 비밀번호 단건 조회
     @Override
     public String findPasswordById(Long id) {
         String result = jdbcTemplate.queryForObject("SELECT password FROM schedules WHERE id = ?", String.class, id);
