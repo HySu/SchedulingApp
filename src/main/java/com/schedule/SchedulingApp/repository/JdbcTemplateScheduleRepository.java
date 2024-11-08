@@ -88,8 +88,7 @@ public class JdbcTemplateScheduleRepository implements ScheduleRepository {
     // 비밀번호 단건 조회
     @Override
     public String findPasswordById(Long id) {
-        String result = jdbcTemplate.queryForObject("SELECT password FROM schedules WHERE id = ?", String.class, id);
-        return result;
+        return jdbcTemplate.queryForObject("SELECT password FROM schedules WHERE id = ?", String.class, id);
     }
 
     private RowMapper<ScheduleResponseDto> scheduleRowMapper(){

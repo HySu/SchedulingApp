@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface ScheduleService {
     // 일정 등록
-    ScheduleResponseDto saveSchedule(ScheduleRequestDto requestDto);
+    ScheduleResponseDto saveSchedule(ScheduleRequestDto dto);
 
     // 일정 전체 목록 가져오기
     List<ScheduleResponseDto> findAllSchedules();
