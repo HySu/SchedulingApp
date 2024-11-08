@@ -70,7 +70,6 @@
     "username" : "hyunsu",
     "title" : "안녕하세요",
     "contents" : "저는 배가 부릅니다.",
-    "password" : "abc123",
     "created_schedule_date" : "2024-11-04 17:14:40",
     "modify_schedule_date" : "2024-11-04 17:14:40"
 }
@@ -230,12 +229,6 @@
 
 ## ERD
 ![제목 없음](https://github.com/user-attachments/assets/76ed2673-5b23-4367-8520-04c26e9a1b84)
-
-
-
-
-
-
 
 ## SQL 작성하기
 - 필수 기능 가이드 개발에 필요한 테이블을 생성하는 query를 작성
