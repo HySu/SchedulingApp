@@ -56,7 +56,6 @@
 |username|String|varchar(20)|사용자 이름|O|
 |title|String|varchar(255)|일정 제목|O|
 |contents|String|varchar(255)|일정 내용|O|
-|password|String|varchar(255)|비밀번호|O|
 |created_schedule_date|LocalDateTime|-|만든 날짜와 시간|O|
 |modify_schedule_date|LocalDateTime|-|수정 날짜와 시간|O|
 
